@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform[] backWheels;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private ProjectileSpawner projectileSpawner;
+    [SerializeField] private UIManager uiManager;
     
     private Rigidbody _rigidbody;
     private float _projectileCooldownTimer;
@@ -43,6 +44,8 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        if (!GameManager.Instance.isGameActive) return;
+        
         var verticalInput = Input.GetAxis("Vertical");
         var horizontalInput = Input.GetAxis("Horizontal");
         var forwardVelocity = Vector3.Dot(_rigidbody.velocity, transform.forward);
@@ -92,12 +95,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.isGameActive) return;
+        
         // Projectile
         if (Input.GetKeyDown(KeyCode.Space) && _projectileCooldownTimer <= 0f)
         {
             projectileSpawner.SpawnProjectile();
             _projectileCooldownTimer = projectileCooldown;
         }
+        
+        // Update speed text
+        var forwardSpeed = Mathf.Abs(Vector3.Dot(_rigidbody.velocity, transform.forward));
+        uiManager.SetSpeedText(forwardSpeed);
         
         if (_projectileCooldownTimer > 0f) _projectileCooldownTimer -= Time.deltaTime;
     }

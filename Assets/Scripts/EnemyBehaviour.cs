@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
     public Vector3[] waypoints;
     public float duration;
