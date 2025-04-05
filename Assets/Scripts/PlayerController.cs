@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         }
 
         _rigidbody.angularVelocity = forwardVelocity * rotationAngle * rotationFactor * transform.up;
-        _rigidbody.AddForce(forwardVelocity * rotationAngle * horizontalForceFactor * Time.fixedDeltaTime *
+        _rigidbody.AddForce(rotationAngle * horizontalForceFactor * Time.fixedDeltaTime *
                             transform.right);
         
         // Front wheel rotation
