@@ -9049,6 +9049,10 @@ PrefabInstance:
       value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
+      propertyPath: rotationSpeed
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraOffset.y
       value: 5
       objectReference: {fileID: 0}
@@ -9062,7 +9066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: rotationFactor
-      value: 0.3
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraTransform
@@ -9071,6 +9075,10 @@ PrefabInstance:
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: accelerationRate
       value: 1100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
+      propertyPath: maxRotationAngle
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: forceTorqueFactor
@@ -9082,7 +9090,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: horizontalForceFactor
-      value: 0.5
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
+      propertyPath: originalRotationAngle
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
+      propertyPath: rotationRecoveryFactor
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraOffsets.Array.size
@@ -9114,7 +9130,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraOffsets.Array.data[2].z
-      value: -1
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917052, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: m_Drag

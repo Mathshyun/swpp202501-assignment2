@@ -2,14 +2,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Acceleration")]
     public float accelerationFactor;
+    public float maxSpeed;
+
+    [Header("Rotation")]
+    public float originalRotationAngle;
+    public float rotationAngle;
+    public float maxRotationAngle;
+    public float rotationSpeed;
+    public float rotationRecoveryFactor;
     public float rotationFactor;
     public float horizontalForceFactor;
-    public float maxSpeedFactor;
     
+    [Header("Camera")]
+    public Vector3[] cameraOffsets;
+    public Vector3 cameraOffset;
+    
+    [Header("References")]
+    [SerializeField] private Transform[] frontWheels;
+    [SerializeField] private Transform[] backWheels;
     [SerializeField] private Transform cameraTransform;
-    [SerializeField] private Vector3[] cameraOffsets;
-    [SerializeField] private Vector3 cameraOffset;
     
     private Rigidbody _rigidbody;
     
@@ -17,6 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.centerOfMass = new Vector3(0f, -0.5f, -0.2f);
+        
         cameraOffset = cameraOffsets[0];
     }
     
@@ -28,22 +42,50 @@ public class PlayerController : MonoBehaviour
         
         // Accelerate
         var accelerationRate =
-            Mathf.Sqrt(Mathf.Clamp01((maxSpeedFactor - (verticalInput >= 0 ? forwardVelocity : -forwardVelocity)) /
-                                     maxSpeedFactor));
+            Mathf.Sqrt(Mathf.Clamp01((maxSpeed - (verticalInput >= 0 ? forwardVelocity : -forwardVelocity)) /
+                                     maxSpeed));
         _rigidbody.AddForce(verticalInput * accelerationRate * accelerationFactor * Time.fixedDeltaTime *
                             transform.forward);
         
         // Rotate
-        _rigidbody.angularVelocity = horizontalInput * forwardVelocity * rotationFactor * transform.up;
-        _rigidbody.AddForce(horizontalInput * forwardVelocity * horizontalForceFactor * Time.fixedDeltaTime *
+        if (horizontalInput != 0)
+        {
+            rotationAngle = Mathf.MoveTowards(rotationAngle, horizontalInput * maxRotationAngle,
+                rotationSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            rotationAngle = Mathf.MoveTowards(rotationAngle, 0f,
+                rotationSpeed * rotationRecoveryFactor * Time.fixedDeltaTime);
+        }
+
+        _rigidbody.angularVelocity = forwardVelocity * rotationAngle * rotationFactor * transform.up;
+        _rigidbody.AddForce(forwardVelocity * rotationAngle * horizontalForceFactor * Time.fixedDeltaTime *
                             transform.right);
         
-        // Debug.Log($"forwardVelocity: {forwardVelocity}, " +
-        //           $"angularVelocity: {_rigidbody.angularVelocity}");
+        // Front wheel rotation
+        foreach (var wheel in frontWheels)
+        {
+            var wheelRotation = wheel.localEulerAngles;
+
+            wheelRotation.z += verticalInput * Time.fixedDeltaTime;
+            wheelRotation.y = originalRotationAngle + rotationAngle;
+            
+            wheel.localEulerAngles = wheelRotation;
+        }
+
+        // Back wheel rotation
+        foreach (var wheel in backWheels)
+        {
+            var wheelRotation = wheel.localEulerAngles;
+            wheelRotation.z += verticalInput * Time.fixedDeltaTime;
+            wheel.localEulerAngles = wheelRotation;
+        }
     }
     
     private void LateUpdate()
     {
+        // Camera control
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             cameraOffset = cameraOffsets[0];
