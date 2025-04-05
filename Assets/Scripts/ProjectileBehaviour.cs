@@ -8,7 +8,7 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            GameManager.Instance.AddScore(GameManager.Instance.scorePerHit);
+            PlayManager.Instance.AddScore(1);
             Destroy(other.gameObject);
         }
         

@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (!GameManager.Instance.isGameActive) return;
+        if (!PlayManager.Instance.isGameActive) return;
         
         var verticalInput = Input.GetAxis("Vertical");
         var horizontalInput = Input.GetAxis("Horizontal");
@@ -95,7 +95,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.isGameActive) return;
+        // Update speed text
+        var forwardSpeed = Mathf.Abs(Vector3.Dot(_rigidbody.velocity, transform.forward));
+        uiManager.SetSpeedText(forwardSpeed);
+        
+        if (!PlayManager.Instance.isGameActive) return;
         
         // Projectile
         if (Input.GetKeyDown(KeyCode.Space) && _projectileCooldownTimer <= 0f)
@@ -103,10 +107,6 @@ public class PlayerController : MonoBehaviour
             projectileSpawner.SpawnProjectile();
             _projectileCooldownTimer = projectileCooldown;
         }
-        
-        // Update speed text
-        var forwardSpeed = Mathf.Abs(Vector3.Dot(_rigidbody.velocity, transform.forward));
-        uiManager.SetSpeedText(forwardSpeed);
         
         if (_projectileCooldownTimer > 0f) _projectileCooldownTimer -= Time.deltaTime;
     }
