@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public float rotationFactor;
     public float horizontalForceFactor;
     public float wheelRotationSpeed;
+
+    [Header("Projectile")]
+    public float projectileCooldown;
     
     [Header("Camera")]
     public Vector3[] cameraOffsets;
@@ -24,13 +27,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform[] frontWheels;
     [SerializeField] private Transform[] backWheels;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private ProjectileSpawner projectileSpawner;
     
     private Rigidbody _rigidbody;
+    private float _projectileCooldownTimer;
     
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.centerOfMass = new Vector3(0f, -0.5f, -0.2f);
+        _projectileCooldownTimer = 0f;
         
         cameraOffset = cameraOffsets[0];
     }
@@ -82,6 +88,18 @@ public class PlayerController : MonoBehaviour
             wheelRotation.z += verticalInput * wheelRotationSpeed * Time.fixedDeltaTime;
             wheel.localEulerAngles = wheelRotation;
         }
+    }
+
+    private void Update()
+    {
+        // Projectile
+        if (Input.GetKeyDown(KeyCode.Space) && _projectileCooldownTimer <= 0f)
+        {
+            projectileSpawner.SpawnProjectile();
+            _projectileCooldownTimer = projectileCooldown;
+        }
+        
+        if (_projectileCooldownTimer > 0f) _projectileCooldownTimer -= Time.deltaTime;
     }
     
     private void LateUpdate()
