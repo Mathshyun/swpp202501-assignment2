@@ -9900,6 +9900,10 @@ PrefabInstance:
       value: 18000
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
+      propertyPath: wheelRotationSpeed
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: horizontalForceFactor
       value: 0.05
       objectReference: {fileID: 0}
@@ -9925,15 +9929,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraOffsets.Array.data[1].x
-      value: -10
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraOffsets.Array.data[1].y
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraOffsets.Array.data[1].z
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6971598004738917050, guid: 8e97eea36c507a34ea9d0bc0977ced28, type: 3}
       propertyPath: cameraOffsets.Array.data[2].y

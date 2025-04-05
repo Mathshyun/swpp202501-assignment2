@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float rotationRecoveryFactor;
     public float rotationFactor;
     public float horizontalForceFactor;
+    public float wheelRotationSpeed;
     
     [Header("Camera")]
     public Vector3[] cameraOffsets;
@@ -68,7 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             var wheelRotation = wheel.localEulerAngles;
 
-            wheelRotation.z += verticalInput * Time.fixedDeltaTime;
+            wheelRotation.z += verticalInput * wheelRotationSpeed * Time.fixedDeltaTime;
             wheelRotation.y = originalRotationAngle + rotationAngle;
             
             wheel.localEulerAngles = wheelRotation;
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
         foreach (var wheel in backWheels)
         {
             var wheelRotation = wheel.localEulerAngles;
-            wheelRotation.z += verticalInput * Time.fixedDeltaTime;
+            wheelRotation.z += verticalInput * wheelRotationSpeed * Time.fixedDeltaTime;
             wheel.localEulerAngles = wheelRotation;
         }
     }
