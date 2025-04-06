@@ -10,6 +10,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI objectiveText;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] private TextMeshProUGUI statusText;
+
+    [Header("Key Guide")]
+    [SerializeField] private GameObject guidePanel;
     
     [Header("Result")]
     [SerializeField] private GameObject resultPanel;
@@ -47,6 +50,11 @@ public class UIManager : MonoBehaviour
     public void SetStatusText(string value)
     {
         statusText.text = value;
+    }
+
+    public void SetGuidePanelActive(bool value)
+    {
+        guidePanel.SetActive(value);
     }
 
     public IEnumerator ShowResult(string objectiveScore, string timeScore, string totalScore)

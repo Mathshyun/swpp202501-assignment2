@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (!PlayManager.Instance.isGameActive) return;
+        if (!PlayManager.Instance.canControl) return;
         
         var verticalInput = Input.GetAxis("Vertical");
         var horizontalInput = Input.GetAxis("Horizontal");
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
         var forwardSpeed = Mathf.Abs(Vector3.Dot(_rigidbody.velocity, transform.forward));
         uiManager.SetSpeedText(forwardSpeed);
         
-        if (!PlayManager.Instance.isGameActive) return;
+        if (!PlayManager.Instance.canControl) return;
         
         // Projectile
         if (Input.GetKeyDown(KeyCode.Space) && _projectileCooldownTimer <= 0f)

@@ -11,9 +11,10 @@ public class PlayManager : MonoBehaviour
     public int maxObjective;
     public float timer;
     public int activatedTriggers;
-    
+
     [Header("States")]
-    public bool isGameActive;
+    public bool isInReady;
+    public bool canControl;
     public bool canRestart;
 
     private void Awake()
@@ -23,15 +24,20 @@ public class PlayManager : MonoBehaviour
 
     private void Start()
     {
-        isGameActive = false;
+        isInReady = false;
+        canControl = false;
         canRestart = false;
-
-        StartCoroutine(StartGame());
+        
+        PrepareGame();
     }
 
     private void Update()
     {
-        if (isGameActive)
+        if (Input.GetKeyDown(KeyCode.Return) && isInReady)
+        {
+            StartCoroutine(StartGame());
+        }
+        if (canControl)
         {
             timer += Time.deltaTime;
             UIManager.Instance.SetTimeText(timer);
@@ -42,17 +48,27 @@ public class PlayManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StartGame()
+    private void PrepareGame()
     {
         objectives = 0;
         timer = 0f;
         UIManager.Instance.SetScoreText(objectives);
         UIManager.Instance.SetTimeText(timer);
+        UIManager.Instance.SetStatusText(string.Empty);
+        UIManager.Instance.SetGuidePanelActive(true);
+        isInReady = true;
+    }
+
+    private IEnumerator StartGame()
+    {
+        isInReady = false;
+        
+        UIManager.Instance.SetGuidePanelActive(false);
         
         UIManager.Instance.SetStatusText("Ready");
         yield return new WaitForSeconds(2f);
         UIManager.Instance.SetStatusText("Start!");
-        isGameActive = true;
+        canControl = true;
         yield return new WaitForSeconds(1f);
         UIManager.Instance.SetStatusText(string.Empty);
         canRestart = true;
@@ -88,7 +104,7 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator FinishGame()
     {
-        isGameActive = false;
+        canControl = false;
         canRestart = false;
         UIManager.Instance.SetStatusText("Finish!");
         yield return new WaitForSeconds(1f);
